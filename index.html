@@ -65,7 +65,47 @@
   }
   .card-cta .arrow { transition: transform 0.15s; }
   a.card:hover .card-cta .arrow { transform: translateX(3px); }
-  footer { margin-top: 56px; font-size: 0.72rem; color: var(--muted); text-align: center; }
+
+  .stats-section { width: 100%; max-width: 920px; margin-top: 52px; }
+  .stats-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 6px; }
+  .stats-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--text); }
+  .stats-note { font-size: 0.72rem; color: var(--muted); }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(220px, 1fr)); gap: 18px;
+  }
+  @media (max-width: 780px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat-card {
+    background: var(--surface); border-radius: 16px; padding: 18px 20px;
+    box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--card-accent);
+  }
+  .stat-card-title {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.82rem;
+    color: var(--text); margin-bottom: 12px;
+  }
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
+  .stat-row-secondary {
+    grid-template-columns: repeat(2, 1fr); margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 480px) { .stat-row { grid-template-columns: repeat(2, 1fr); row-gap: 14px; } }
+  .stat-item { min-width: 0; }
+  .stat-val {
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.3rem;
+    color: var(--text); line-height: 1;
+  }
+  .stat-row-secondary .stat-val { font-size: 1.05rem; color: var(--soft); }
+  .stat-val.accent { color: var(--card-accent); }
+  .stat-val.staff { color: #0891b2; }
+  .stat-val.warn { color: #b45309; }
+  .stat-label {
+    font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--muted); margin-top: 4px;
+  }
+  .stat-err { font-size: 0.72rem; color: var(--muted); }
+  footer { margin-top: 44px; font-size: 0.72rem; color: var(--muted); text-align: center; }
 </style>
 </head>
 <body>
@@ -95,7 +135,184 @@
   </a>
 </div>
 
-<footer>Each tracker keeps its own Firebase sign-in — this page just links out.</footer>
+<div class="stats-section">
+  <div class="stats-header">
+    <div class="stats-title">At a Glance</div>
+    <div class="stats-note" id="statsAsOf">Loading live totals…</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card" style="--card-accent:#b8860b">
+      <div class="stat-card-title">🏗️ Zoning</div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="stat-val accent" id="zQueue">—</div><div class="stat-label">Open Queue</div></div>
+        <div class="stat-item"><div class="stat-val staff" id="zStaff">—</div><div class="stat-label">Needs Staff</div></div>
+        <div class="stat-item"><div class="stat-val warn" id="zResident">—</div><div class="stat-label">Needs Resident</div></div>
+      </div>
+      <div class="stat-row stat-row-secondary">
+        <div class="stat-item"><div class="stat-val" id="zApproved">—</div><div class="stat-label">Approved</div></div>
+        <div class="stat-item"><div class="stat-val" id="zDenied">—</div><div class="stat-label">Denied</div></div>
+      </div>
+    </div>
+    <div class="stat-card" style="--card-accent:#6c8ef5">
+      <div class="stat-card-title">📐 Planning</div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="stat-val accent" id="pQueue">—</div><div class="stat-label">Open Queue</div></div>
+        <div class="stat-item"><div class="stat-val staff" id="pStaff">—</div><div class="stat-label">Needs Staff</div></div>
+        <div class="stat-item"><div class="stat-val warn" id="pResident">—</div><div class="stat-label">Needs Resident</div></div>
+      </div>
+      <div class="stat-row stat-row-secondary">
+        <div class="stat-item"><div class="stat-val" id="pApproved">—</div><div class="stat-label">Approved</div></div>
+        <div class="stat-item"><div class="stat-val" id="pDenied">—</div><div class="stat-label">Denied</div></div>
+      </div>
+    </div>
+    <div class="stat-card" style="--card-accent:#166534">
+      <div class="stat-card-title">🏛️ Landmarks</div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="stat-val accent" id="lQueue">—</div><div class="stat-label">Open Queue</div></div>
+        <div class="stat-item"><div class="stat-val staff" id="lStaff">—</div><div class="stat-label">Needs Staff</div></div>
+        <div class="stat-item"><div class="stat-val warn" id="lResident">—</div><div class="stat-label">Needs Resident</div></div>
+      </div>
+      <div class="stat-row stat-row-secondary">
+        <div class="stat-item"><div class="stat-val" id="lApproved">—</div><div class="stat-label">Approved</div></div>
+        <div class="stat-item"><div class="stat-val" id="lDenied">—</div><div class="stat-label">Denied</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Each tracker keeps its own Firebase sign-in — this page just links out. Stats above are all-time totals read directly from the public ArcGIS feed.</footer>
+
+<script>
+// All three trackers read the same public ArcGIS FeatureServer — no auth
+// needed for any of this. Queue membership needs the task JSON parsed
+// client-side (ArcGIS can't filter on "is this task active" in a WHERE
+// clause), so we fetch that once and derive all three queue counts from
+// the same dataset. Approved/Denied are plain returnCountOnly queries —
+// no records downloaded at all.
+const API_BASE = 'https://services3.arcgis.com/dty2kHktVXHrqO8i/arcgis/rest/services/Project_Records/FeatureServer/0/query';
+const OPEN_WHERE = "COMPLETED_TASKS_WITH_COMPLETED_DATE NOT LIKE '%Closure - Closed%' AND RECORD_STATUS_HISTORY_WITH_STATUS_DATE NOT LIKE '%Closure - Closed%'";
+const CLOSED_OUT_RE = /closed|no action|not required|skip/i;
+
+async function countOnly(likeClause) {
+  const where = encodeURIComponent(`COMPLETED_TASKS_WITH_COMPLETED_DATE LIKE '${likeClause}'`);
+  const url = `${API_BASE}?where=${where}&returnCountOnly=true&f=json`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+  const json = await res.json();
+  return json.count ?? 0;
+}
+
+// Fetch every open (non-closed) permit's task list — same dataset each
+// individual tracker's own dashboard queue is built from, but with only the
+// two fields needed for a count (no address/description/etc payload).
+async function fetchOpenTaskLists() {
+  const where = encodeURIComponent(OPEN_WHERE);
+  const fields = 'PERMIT_ID,ACTIVE_AND_COMPLETED_TASKS_JSON';
+  let all = [], offset = 0, more = true;
+  while (more) {
+    const url = `${API_BASE}?where=${where}&outFields=${fields}&resultRecordCount=1000&resultOffset=${offset}&returnGeometry=false&f=json`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    const json = await res.json();
+    if (json.error) throw new Error(json.error.message || 'ArcGIS error');
+    const feats = json.features || [];
+    all = all.concat(feats.map(f => {
+      let tasks = [];
+      try { tasks = JSON.parse(f.attributes.ACTIVE_AND_COMPLETED_TASKS_JSON || '[]'); } catch (e) {}
+      return tasks;
+    }));
+    more = json.exceededTransferLimit === true;
+    offset += feats.length;
+    if (!feats.length) break;
+  }
+  return all;
+}
+
+// Mirrors each tracker's own _inXQueue logic exactly:
+//  - Zoning: active task at either of its two stages
+//  - Planning / Landmarks: parent active, OR parent completed with a real
+//    (non-closed-out) outcome + a sub-task active + the COMPETING parent
+//    (which reuses two of the same sub-task names) isn't also active
+function isInQueueZoning(tasks) {
+  const active = new Set(tasks.filter(t => t.active === 'Yes').map(t => t.process));
+  return active.has('Zoning Admin Review') || active.has('Zoning Review');
+}
+function isInQueueParent(tasks, parent, subStages, competingParent) {
+  const active = new Set(tasks.filter(t => t.active === 'Yes').map(t => t.process));
+  const parentActive = active.has(parent);
+  const parentDoneReal = tasks.some(t => t.process === parent && t.active !== 'Yes' && !CLOSED_OUT_RE.test(t.status || ''));
+  const subActive = subStages.some(s => active.has(s));
+  const competingActive = active.has(competingParent);
+  return parentActive || (parentDoneReal && subActive && !competingActive);
+}
+
+// "Waiting on applicant" — same concept as each tracker's own Analytics tab
+// "Whose Court?" chart: does the permit have an active task, within THIS
+// tool's own stages, parked at a status that means the ball is with the
+// applicant (not the reviewers)? Anything not caught by this is implicitly
+// "actionable now" on the reviewer side.
+const APPLICANT_WAIT_RE = /additional info required|docs required|revisions required|resubmit|corrections required/i;
+function isWaitingOnApplicant(tasks, relevantStages) {
+  return tasks.some(t => t.active === 'Yes' && relevantStages.includes(t.process) && APPLICANT_WAIT_RE.test(t.status || ''));
+}
+
+const PLANNING_SUB_STAGES = ['Planning Distribution', 'Local Design Schematic Review', 'Planning Commission Initial Review', 'Local Design Final Review', 'Planning Commission Final Review', 'Planning Coordination'];
+const LANDMARKS_SUB_STAGES = ['Landmarks Distribution', 'Pre-Review Meeting', 'Local Design Schematic Review', 'Landmark Commission Schematic Review', 'Local Design Final Review', 'Landmark Commission Final Review', 'Landmarks Coordination'];
+
+// One pass over the shared task-list dataset per tool: count queue
+// membership and, among those, how many are currently stuck on the applicant.
+function computeStats(taskLists, inQueueFn, relevantStages) {
+  let queue = 0, waiting = 0;
+  taskLists.forEach(tasks => {
+    if (!inQueueFn(tasks)) return;
+    queue++;
+    if (isWaitingOnApplicant(tasks, relevantStages)) waiting++;
+  });
+  return { queue, waiting };
+}
+
+function setStat(id, val, isErr) {
+  const el = document.getElementById(id);
+  if (isErr) { el.textContent = '—'; el.title = 'Failed to load'; return; }
+  el.textContent = val.toLocaleString();
+}
+
+function applyStats(prefix, s) {
+  setStat(prefix + 'Queue', s.queue);
+  setStat(prefix + 'Staff', s.queue - s.waiting);   // actionable now — on the reviewer's desk
+  setStat(prefix + 'Resident', s.waiting);          // parked on the applicant/resident
+  setStat(prefix + 'Approved', s.approved);
+  setStat(prefix + 'Denied', s.denied);
+}
+
+async function loadStats() {
+  const allIds = ['zQueue','zStaff','zResident','zApproved','zDenied','pQueue','pStaff','pResident','pApproved','pDenied','lQueue','lStaff','lResident','lApproved','lDenied'];
+  try {
+    const [taskLists, zApproved, zDenied, pApproved, pDenied, lApproved, lDenied] = await Promise.all([
+      fetchOpenTaskLists(),
+      countOnly('%Zoning Review - Approved%'),
+      countOnly('%Zoning Review - Denied%'),
+      countOnly('%Planning Review - Approved%'),
+      countOnly('%Planning Review - Denied%'),
+      countOnly('%Landmarks Review - Approved%'),
+      countOnly('%Landmarks Review - Denied%'),
+    ]);
+
+    const z = computeStats(taskLists, isInQueueZoning, ['Zoning Admin Review', 'Zoning Review']);
+    const p = computeStats(taskLists, t => isInQueueParent(t, 'Planning Review', PLANNING_SUB_STAGES, 'Landmarks Review'), ['Planning Review', ...PLANNING_SUB_STAGES]);
+    const l = computeStats(taskLists, t => isInQueueParent(t, 'Landmarks Review', LANDMARKS_SUB_STAGES, 'Planning Review'), ['Landmarks Review', ...LANDMARKS_SUB_STAGES]);
+
+    applyStats('z', { ...z, approved: zApproved, denied: zDenied });
+    applyStats('p', { ...p, approved: pApproved, denied: pDenied });
+    applyStats('l', { ...l, approved: lApproved, denied: lDenied });
+
+    document.getElementById('statsAsOf').textContent = `${taskLists.length.toLocaleString()} open permits scanned · all-time approved/denied`;
+  } catch (e) {
+    document.getElementById('statsAsOf').textContent = 'Live totals unavailable right now — try reloading.';
+    allIds.forEach(id => setStat(id, 0, true));
+    console.error(e);
+  }
+}
+loadStats();
+</script>
 
 </body>
 </html>
