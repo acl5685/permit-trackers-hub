@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Permit Trackers</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef2f7;
+    --surface: #ffffff;
+    --border: rgba(174,192,222,0.35);
+    --shadow-out: 6px 6px 16px rgba(174,192,222,0.55), -6px -6px 16px rgba(255,255,255,0.85);
+    --shadow-sm: 3px 3px 8px rgba(174,192,222,0.45), -3px -3px 8px rgba(255,255,255,0.8);
+    --text: #2d3a4a;
+    --soft: #6b7a8d;
+    --muted: #a0aec0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text);
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    padding: 60px 20px 40px;
+  }
+  .eyebrow {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 2rem;
+    color: var(--text); letter-spacing: -0.5px; margin-bottom: 8px; text-align: center;
+  }
+  .sub {
+    font-size: 0.95rem; color: var(--soft); margin-bottom: 44px; text-align: center; max-width: 480px;
+  }
+  .grid {
+    display: grid; grid-template-columns: repeat(3, minmax(220px, 280px)); gap: 22px;
+    width: 100%; max-width: 920px;
+  }
+  @media (max-width: 780px) { .grid { grid-template-columns: 1fr; max-width: 380px; } }
+  a.card {
+    display: flex; flex-direction: column; text-decoration: none; color: inherit;
+    background: var(--surface); border-radius: 20px; padding: 26px 22px 22px;
+    box-shadow: var(--shadow-out); position: relative; overflow: hidden;
+    border: 2px solid transparent; transition: transform 0.18s, box-shadow 0.18s;
+  }
+  a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: var(--card-accent); }
+  a.card::before {
+    content: ''; position: absolute; inset: 0 0 auto 0; height: 5px;
+    background: var(--card-accent);
+  }
+  .card-icon {
+    width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.4rem; margin-bottom: 16px;
+    background: color-mix(in srgb, var(--card-accent) 14%, transparent);
+  }
+  .card-title {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.1rem;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .card-desc { font-size: 0.82rem; color: var(--soft); line-height: 1.45; margin-bottom: 18px; flex: 1; }
+  .card-cta {
+    font-size: 0.78rem; font-weight: 800; color: var(--card-accent);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .card-cta .arrow { transition: transform 0.15s; }
+  a.card:hover .card-cta .arrow { transform: translateX(3px); }
+  footer { margin-top: 56px; font-size: 0.72rem; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">City Permitting</div>
+<h1>Permit Trackers</h1>
+<div class="sub">Live dashboards over Cleveland's ArcGIS permit feed. Pick a queue — each tool has its own sign-in.</div>
+
+<div class="grid">
+  <a class="card" style="--card-accent:#b8860b" href="https://main.d3p2swgaux37uw.amplifyapp.com" target="_self">
+    <div class="card-icon">🏗️</div>
+    <div class="card-title">Zoning Permit Tracker</div>
+    <div class="card-desc">Zoning admin review queue, staff assignment board, and case-age tracking.</div>
+    <div class="card-cta">Open tracker <span class="arrow">→</span></div>
+  </a>
+  <a class="card" style="--card-accent:#6c8ef5" href="https://acl5685.github.io/planning-permit-tracker/" target="_self">
+    <div class="card-icon">📐</div>
+    <div class="card-title">Planning Permit Tracker</div>
+    <div class="card-desc">Neighborhood Planning Review queue — Distribution, Design & Commission Review pipeline.</div>
+    <div class="card-cta">Open tracker <span class="arrow">→</span></div>
+  </a>
+  <a class="card" style="--card-accent:#166534" href="https://acl5685.github.io/landmarks-permit-tracker/" target="_self">
+    <div class="card-icon">🏛️</div>
+    <div class="card-title">Landmarks Review Tracker</div>
+    <div class="card-desc">Landmarks Commission review queue — Distribution gate through Coordination.</div>
+    <div class="card-cta">Open tracker <span class="arrow">→</span></div>
+  </a>
+</div>
+
+<footer>Each tracker keeps its own Firebase sign-in — this page just links out.</footer>
+
+</body>
+</html>
