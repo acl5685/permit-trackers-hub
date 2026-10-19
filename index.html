@@ -65,6 +65,12 @@
   }
   .card-cta .arrow { transition: transform 0.15s; }
   a.card:hover .card-cta .arrow { transform: translateX(3px); }
+  a.card.wide { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 18px; padding: 22px 24px 20px; }
+  a.card.wide .card-icon { margin-bottom: 0; flex: none; }
+  a.card.wide .wide-text { flex: 1; min-width: 0; }
+  a.card.wide .card-desc { margin-bottom: 0; }
+  a.card.wide .card-cta { flex: none; white-space: nowrap; }
+  @media (max-width: 780px) { a.card.wide { flex-direction: column; align-items: flex-start; gap: 6px; } a.card.wide .card-icon { margin-bottom: 10px; } a.card.wide .card-desc { margin-bottom: 14px; } }
 
   .stats-section { width: 100%; max-width: 920px; margin-top: 52px; }
   .stats-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 6px; }
@@ -132,6 +138,14 @@
     <div class="card-title">Landmarks Review Tracker</div>
     <div class="card-desc">Landmarks Commission review queue — Distribution gate through Coordination.</div>
     <div class="card-cta">Open tracker <span class="arrow">→</span></div>
+  </a>
+  <a class="card wide" style="--card-accent:#2a8c9a" href="https://city-hall-permits.web.app" target="_self">
+    <div class="card-icon">🏙️</div>
+    <div class="wide-text">
+      <div class="card-title">City Hall — 3D view</div>
+      <div class="card-desc">All three queues as one walkable floor plan: rooms, people with their initials, and the permits assigned to each person. Uses the same sign-in as the trackers.</div>
+    </div>
+    <div class="card-cta">Open City Hall <span class="arrow">→</span></div>
   </a>
 </div>
 
